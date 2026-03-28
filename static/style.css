@@ -1,0 +1,346 @@
+/* ================= GLOBAL ================= */
+body{
+    margin:0;
+    font-family:"Segoe UI",sans-serif;
+    background:linear-gradient(135deg,#0f0f0f,#1e1e2f);
+    color:white;
+    overflow:auto; /* allow scrolling if needed */
+}
+
+/* ================= MAIN LAYOUT ================= */
+#layout{display:flex;height:100vh;}
+
+/* ================= SIDEBAR ================= */
+/* TERMINAL BASE */
+#terminal{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 180px;
+    background: #0f111a;
+    border-top: 1px solid rgba(255,255,255,.08);
+    display: flex;
+    flex-direction: column;
+    transition: height .35s cubic-bezier(.4,0,.2,1);
+    z-index: 999;
+}
+
+/* EXPANDED MODE — half screen upward */
+#terminal.expanded{
+    height: 50vh;
+}
+
+/* TERMINAL SIZE STATES */
+.terminal{
+    height:180px;
+   
+
+er-top:1px solid rgba(255,255,255,.1);
+    display:flex;
+    flex-direction:column;
+    transition: height .35s cubic-bezier(.4,0,.2,1);
+}
+
+.terminal.expanded{
+    height:420px;
+}
+
+#sidebar{
+    width:240px;
+    background:#151521;
+    padding:15px;
+    box-shadow:5px 0 20px rgba(0,0,0,.4);
+    display:flex;
+    flex-direction:column;
+}
+.logo{
+    margin:0;
+    font-size:20px;
+    letter-spacing:1px;
+    color:#7aa2ff;
+}
+.explorer-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:15px 0 10px 0;
+}
+#file-list{
+    list-style:none;
+    padding:0;
+    margin:0;
+    flex:1;
+    overflow:auto;
+}
+#file-list li{
+    padding:6px;
+    border-radius:6px;
+    cursor:pointer;
+    transition:.2s;
+}
+#file-list li:hover{background:#23233a;}
+
+/* ================= WORKSPACE ================= */
+#workspace{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    min-width:300px;
+}
+
+/* ================= TOPBAR ================= */
+#topbar{
+    height:52px;
+    background:rgba(15,15,25,.95);
+    backdrop-filter:blur(8px);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 15px;
+    box-shadow:0 4px 20px rgba(0,0,0,.4);
+}
+.toolbar-left,.toolbar-right{display:flex;align-items:center;}
+.toolbar-center{font-weight:600;letter-spacing:.5px;}
+.status-dot{
+    width:10px;
+    height:10px;
+    background:#22c55e;
+    border-radius:50%;
+    margin-right:6px;
+}
+
+/* Fix topbar buttons visibility */
+#topbar .tool-btn {
+    display: inline-flex;
+    margin: 0 6px 0 0;     /* spacing between buttons */
+    padding: 6px 12px;     /* smaller buttons for topbar */
+    border-radius: 6px;    /* normal rectangle shape */
+    background: linear-gradient(45deg,#7a5cff,#00d4ff);
+    color: white;
+    font-weight: bold;
+}
+
+/* ================= LANGUAGE SELECTOR ================= */
+#topbar select{
+    margin-left:10px;
+    padding:6px 12px;
+    border-radius:20px;
+    background:linear-gradient(45deg,#7a5cff,#00d4ff);
+    color:white;
+    border:none;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* ================= FILE TABS ================= */
+#file-tabs{
+    display:flex;
+    height:36px;
+    background:#1a1a2e;
+    border-bottom:1px solid rgba(255,255,255,.1);
+    overflow-x:auto;
+}
+.tab{
+    padding:6px 12px;
+    margin-right:2px;
+    background:#22223b;
+    border-radius:6px 6px 0 0;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    transition:.2s;
+    max-width:200px;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden;
+}
+.tab.active{background:#3b3b7b;font-weight:bold;}
+.tab:hover{background:#2b2b55;}
+.tab .close-btn{margin-left:6px;font-weight:bold;cursor:pointer;}
+
+/* ================= EDITOR + PREVIEW ================= */
+#editor-preview{
+    flex:1;
+    display:flex;
+    overflow:hidden;
+    position:relative;
+}
+#editor-container{flex:1; min-width:200px; background:#1e1e1e;}
+#editor{width:100%; height:100%;}
+#preview{
+    width:420px;
+    min-width:200px;
+    background:#0c0c14;
+    border-left:1px solid rgba(255,255,255,.08);
+}
+iframe{width:100%;height:100%;border:none;background:#1e1e1e;}
+#resize-bar{
+    width:5px;
+    cursor:col-resize;
+    background:rgba(255,255,255,0.1);
+    z-index:10;
+    position:relative;
+    transition:.1s;
+}
+#resize-bar:hover{background:rgba(255,255,255,0.3);}
+
+/* ================= TERMINAL ================= */
+#terminal{
+    height:180px;
+    background:#000;
+    border-top:1px solid rgba(255,255,255,.1);
+    display:flex;
+    flex-direction:column;
+}
+.terminal-header{
+    padding:6px 10px;
+    background:#111;
+    font-size:13px;
+    color:#bbb;
+}
+.terminal-input{
+    display:flex;
+    padding:6px;
+    background:#0a0a0a;
+}
+#cmd{
+    flex:1;
+    padding:8px;
+    border:none;
+    background:#111;
+    color:#0f0;
+    font-family:monospace;
+    outline:none;
+}
+#terminal-output{
+    flex:1;
+    padding:10px;
+    padding-bottom:12px;
+    overflow:auto;
+    font-family:monospace;
+    color:#0f0;
+}
+#terminal-tabs{
+    display:flex;
+    overflow-x:auto;
+    background:#111;
+    border-bottom:1px solid rgba(255,255,255,.1);
+}
+.terminal-tab{
+    padding:4px 10px;
+    margin-right:2px;
+    background:#222;
+    border-radius:4px 4px 0 0;
+    cursor:pointer;
+}
+.terminal-tab.active{background:#333;font-weight:bold;}
+.terminal-output-panel{
+    display:none;
+    flex:1;
+    padding:10px;
+    overflow:auto;
+    font-family:monospace;
+    color:#0f0;
+}
+.terminal-output-panel.active{display:block;}
+
+/* ================= AI SIDEBAR ================= */
+#ai-sidebar{
+    width:250px;
+    background:#11111a;
+    border-left:1px solid rgba(255,255,255,.08);
+    display:flex;
+    flex-direction:column;
+    padding:10px;
+}
+#ai-sidebar textarea{
+    flex:1;
+    resize:none;
+    margin-bottom:5px;
+    background:#222;
+    color:white;
+    border:none;
+    padding:6px;
+    border-radius:6px;
+    font-family:monospace;
+    min-height:80px;
+}
+#ai-sidebar button{
+    background:linear-gradient(45deg,#4f46e5,#06b6d4);
+    border-radius:50px;
+}
+#ai-sidebar pre{
+    background:#000;
+    color:#0f0;
+    flex:1;
+    padding:6px;
+    overflow:auto;
+    margin-top:5px;
+}
+
+/* AI PANEL */
+.ai-panel{
+    width: 300px;
+    min-width: 200px;
+    background: #1e1e1e;
+    border-left: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    transition: width 0.3s ease;
+}
+
+/* collapsed state */
+.ai-panel.collapsed{
+    width:60px;
+}
+
+/* header */
+.ai-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    background: #252526;
+    border-bottom: 1px solid #333;
+}
+
+/* arrow button */
+#ai-toggle{
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* ================= BUTTONS ================= */
+button{
+    background:linear-gradient(45deg,#7a5cff,#00d4ff);
+    border:none;
+    padding:10px 18px;
+    margin:5px;
+    border-radius:50px;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.25s;
+}
+button:hover{transform:scale(1.08);box-shadow:0 0 20px rgba(0,212,255,.6);}
+button:active{transform:scale(.95);}
+.small-btn{padding:4px 10px;font-size:14px;}
+.tool-btn{margin-right:8px;}
+
+#file-list li span:last-child{
+    opacity:0.6;
+    transition:.2s;
+}
+
+#file-list li span:last-child:hover{
+    opacity:1;
+    transform:scale(1.2);
+}
+
+/* ================= SCROLLBAR ================= */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-thumb{background:#444;border-radius:10px;}
