@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Professional Web IDE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div id="layout">
+
+    <!-- Sidebar / Explorer -->
+    <div id="sidebar">
+        <h3 class="logo">Strata</h3>
+        <div class="explorer-header">
+            <span>Explorer</span>
+            <button class="small-btn" onclick="newFile()">+</button>
+        </div>
+        <ul id="file-list"></ul>
+    </div>
+
+    <!-- Main Workspace -->
+    <div id="workspace">
+
+        <!-- Top Toolbar -->
+        <div id="topbar">
+            <div class="toolbar-left">
+                <button class="tool-btn" onclick="runSmart()">Run</button>
+                <button class="tool-btn" onclick="saveFile()">Save</button>
+                <button class="tool-btn" onclick="togglePreview()">Preview</button>
+                <!-- LANGUAGE SELECTOR -->
+                <select onchange="setLanguage(this.value)">
+                    <option value="python">Python</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="html">HTML</option>
+                    <option value="css">CSS</option>
+                    <option value="java">Java</option>
+                    <option value="c">C</option>
+                    <option value="cpp">C++</option>
+                </select>
+            </div>
+            <div class="toolbar-center">
+                <span class="project-name">Strata</span>
+            </div>
+            <div class="toolbar-right">
+                <span class="status-dot"></span>
+            </div>
+        </div>
+
+        <!-- File Tabs -->
+        <div id="file-tabs"></div>
+
+        <!-- Editor + Preview Split -->
+        <div id="editor-preview">
+            <div id="editor-container"></div>
+            <div id="resize-bar"></div>
+            <div id="preview">
+                <iframe id="preview-frame"></iframe>
+            </div>
+        </div>
+
+        <!-- Terminal -->
+        <div id="terminal">
+            <div class="terminal-header">
+                    <button id="terminal-expand-btn" onclick="toggleTerminalSize()">
+            <!-- Expand SVG -->
+            <svg id="terminal-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"
+                      stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+                Terminal
+                <button class="small-btn" onclick="newTerminal()">+ New</button>
+            </div>
+            <div id="terminal-tabs"></div>
+            <div class="terminal-input">
+                <input id="cmd" placeholder="Type bash command...">
+                <button class="tool-btn" onclick="runTerminal()">Run</button>
+            </div>
+            <pre id="terminal-output" class="terminal-output-panel active"></pre>
+        </div>
+
+    </div>
+
+    <!-- AI Assistant Sidebar -->
+<div id="ai-panel" class="ai-panel">
+    
+    <div class="ai-header">
+        <span>AI Assistant</span>
+        <button id="ai-toggle" onclick="toggleAIPanel()">◀</button>
+    </div>
+
+    <div class="ai-body">
+        <textarea id="ai-input" placeholder="Ask AI for code suggestions..."></textarea>
+        <button onclick="askAI()">Send</button>
+        <pre id="ai-output"></pre>
+    </div>
+
+</div>
+
+<!-- Monaco Editor Loader -->
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.39.0/min/vs/loader.js"></script>
+<script src="{{ url_for('static', filename='editor.js') }}"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
